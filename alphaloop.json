@@ -1,0 +1,27 @@
+{
+  "calibration": {},
+  "generated_at": "2026-07-09T01:13:29.379648+00:00",
+  "lessons_count": 0,
+  "rejections": {
+    "parse_error": 7
+  },
+  "runs": {
+    "counts": {
+      "brief:ok": 1,
+      "cycle:ok": 6,
+      "discover:ok": 1,
+      "grade:ok": 1
+    },
+    "latest_finished_at": "2026-07-08T20:43:18.817505+00:00"
+  },
+  "theses": {
+    "by_sleeve": {},
+    "overall": {
+      "confirmed": 0,
+      "hit_rate": null,
+      "invalidated": 0,
+      "open": 0,
+      "total": 0
+    }
+  }
+}

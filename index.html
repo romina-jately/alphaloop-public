@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AlphaLoop: a self-grading equity research loop</title>
+<meta name="description" content="An autonomous research loop that drafts investment theses with LLMs, validates every claim deterministically, and grades its own track record. Public aggregate telemetry only.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23131110'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23d4a256' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #131110;
+    --surface: #1a1714;
+    --line: #2b2620;
+    --line-soft: #221e19;
+    --ink: #e9e2d6;
+    --ink-2: #b3a996;
+    --ink-3: #8a8071;
+    --ember: #d4a256;
+    --ember-bar: #b98432;
+    --ok: #7fa36b;
+    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, sans-serif;
+    --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--ember); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---------- header ---------- */
+  header {
+    border-bottom: 1px solid var(--line-soft);
+    padding: 20px 0;
+  }
+  header .wrap { display: flex; align-items: baseline; justify-content: space-between; }
+  .wordmark { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink); }
+  .header-note { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 88px 0 72px; }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(32px, 4.4vw, 50px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    max-width: 24ch;
+  }
+  .hero h1 em { font-style: italic; color: var(--ember); }
+  .hero p.lede {
+    margin-top: 22px;
+    font-size: 18px;
+    color: var(--ink-2);
+    max-width: 52ch;
+  }
+  .hero .scope {
+    margin-top: 30px;
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 9px 14px;
+    background: var(--surface);
+  }
+  .hero .scope strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- sections ---------- */
+  section { padding: 68px 0; border-top: 1px solid var(--line-soft); }
+  .sec-head { max-width: 62ch; margin-bottom: 40px; }
+  .sec-head h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.2;
+  }
+  .sec-head p { margin-top: 12px; color: var(--ink-2); }
+
+  /* ---------- pipeline ---------- */
+  .pipeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; }
+  .stage { background: var(--surface); padding: 24px 22px 26px; position: relative; }
+  .stage h3 { font-family: var(--mono); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); font-weight: 600; }
+  .stage p { margin-top: 9px; font-size: 14.5px; color: var(--ink-2); line-height: 1.55; }
+  .stage .arrow { position: absolute; top: 24px; right: 16px; color: var(--ink-3); font-family: var(--mono); font-size: 13px; }
+
+  /* ---------- guardrails ---------- */
+  .rails { border-top: 1px solid var(--line); }
+  .rail { display: grid; grid-template-columns: 300px 1fr; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+  .rail h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 20px; line-height: 1.3; }
+  .rail p { color: var(--ink-2); font-size: 15px; max-width: 62ch; }
+  .rail p code { font-family: var(--mono); font-size: 13px; color: var(--ink); background: var(--surface); border: 1px solid var(--line-soft); border-radius: 4px; padding: 1px 6px; }
+
+  /* ---------- telemetry ---------- */
+  .stamp { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-bottom: 28px; }
+  .stamp .dot { color: var(--ok); }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 40px; margin-bottom: 56px; }
+  .tile { border-top: 1px solid var(--line); padding-top: 14px; }
+  .tile .num { font-family: var(--mono); font-size: 34px; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .tile .num small { font-size: 16px; color: var(--ink-3); }
+  .tile .lbl { margin-top: 6px; font-size: 13.5px; color: var(--ink-2); }
+
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .chart h3 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .chart .sub { font-size: 13px; color: var(--ink-3); margin-bottom: 18px; }
+  .brow { display: grid; grid-template-columns: 110px 1fr 44px; align-items: center; gap: 12px; padding: 7px 0; }
+  .brow .k { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); }
+  .brow .track { height: 10px; position: relative; }
+  .brow .fill { height: 10px; background: var(--ember-bar); border-radius: 0 4px 4px 0; min-width: 3px; }
+  .brow .v { font-family: var(--mono); font-size: 13px; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+
+  .gauntlet-note {
+    margin-top: 48px;
+    border-left: 2px solid var(--ember-bar);
+    padding: 4px 0 4px 20px;
+    max-width: 68ch;
+    color: var(--ink-2);
+    font-size: 15px;
+  }
+  .gauntlet-note strong { color: var(--ink); }
+
+  .empty-cal {
+    margin-top: 56px;
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    padding: 34px 30px;
+    text-align: center;
+  }
+  .empty-cal h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 19px; }
+  .empty-cal p { margin-top: 8px; color: var(--ink-3); font-size: 14px; max-width: 56ch; margin-left: auto; margin-right: auto; }
+
+  /* ---------- engineering ---------- */
+  .eng { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 56px; }
+  .eng-item { padding: 16px 0; border-bottom: 1px solid var(--line-soft); }
+  .eng-item h3 { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+  .eng-item p { font-size: 14px; color: var(--ink-2); margin-top: 4px; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 44px 0 64px; }
+  footer .compliance { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); }
+  footer .privacy { margin-top: 10px; font-size: 13.5px; color: var(--ink-3); max-width: 72ch; }
+  footer .byline { margin-top: 26px; font-size: 14px; color: var(--ink-2); }
+
+  /* ---------- motion ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .reveal.d1 { animation-delay: 0.08s; }
+    .reveal.d2 { animation-delay: 0.16s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    .brow .fill { transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+  }
+
+  /* ---------- mobile ---------- */
+  @media (max-width: 860px) {
+    .hero { padding: 56px 0 48px; }
+    section { padding: 52px 0; }
+    .pipeline { grid-template-columns: 1fr; }
+    .stage .arrow { display: none; }
+    .rail { grid-template-columns: 1fr; gap: 8px; }
+    .tiles { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .charts { grid-template-columns: 1fr; gap: 44px; }
+    .eng { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="wordmark">AlphaLoop</span>
+    <span class="header-note">Live system telemetry</span>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="hero">
+      <h1 class="reveal">A research loop that <em>grades its own homework</em>.</h1>
+      <p class="lede reveal d1">AlphaLoop drafts investment theses with LLMs, refuses to trust a single word of them, and scores every call it survives.</p>
+      <p class="scope reveal d2"><strong>Aggregates only.</strong> This page never shows holdings, tickers, or model text.</p>
+    </div>
+  </div>
+
+  <section id="loop">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>One loop, six moves</h2>
+        <p>The whole system is a scheduled cycle. Each pass runs unattended on CI cron and leaves a full audit trail in a single SQLite file.</p>
+      </div>
+      <div class="pipeline">
+        <div class="stage"><span class="arrow">&rarr;</span><h3>Ingest</h3><p>Prices, SEC filings, news feeds, and social sentiment are pulled on a market-day schedule and stored as deduplicated events.</p></div>
+        <div class="stage"><span class="arrow">&rarr;</span><h3>Synthesize</h3><p>Two LLM providers draft theses in strict JSON: a claim, a confidence, a catalyst, and the condition that would kill the idea.</p></div>
+        <div class="stage"><span class="arrow">&darr;</span><h3>Validate</h3><p>A deterministic gauntlet checks every field against real symbol lists and freshly fetched prices. Any failure means discard and log.</p></div>
+        <div class="stage"><span class="arrow">&rarr;</span><h3>Notify</h3><p>Only validated calls reach email and push. Every send passes a compliance gate and a dedup check, so nothing fires twice.</p></div>
+        <div class="stage"><span class="arrow">&rarr;</span><h3>Grade</h3><p>When a thesis resolves, the system scores it against price data: confirmed or invalidated, no partial credit.</p></div>
+        <div class="stage"><h3>Reflect</h3><p>Missed calls become written lessons, stored and injected into future prompts. The loop gets better by remembering, not by retraining.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="guardrails">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Built to distrust itself</h2>
+        <p>The interesting engineering problem was never picking stocks. It was letting a language model near financial analysis without ever taking its word for anything.</p>
+      </div>
+      <div class="rails">
+        <div class="rail">
+          <h3>Every output is presumed hallucinated</h3>
+          <p>No model response reaches storage or a notification without surviving strict schema parsing, a ticker allowlist, and price cross-checks against independently fetched data. Rejections are logged with a reason code and a hash, never the raw text.</p>
+        </div>
+        <div class="rail">
+          <h3>Learning is memory, not weights</h3>
+          <p>Nothing is fine-tuned. Graded outcomes and written lessons live in SQLite and are re-injected into future prompts, so the system improves while staying fully inspectable.</p>
+        </div>
+        <div class="rail">
+          <h3>Recommendations only, by constitution</h3>
+          <p>No trading, broker, or order code exists anywhere in the codebase, and an automated compliance scan enforces it. Every action on a real position is manual and human.</p>
+        </div>
+        <div class="rail">
+          <h3>Zero secrets in code or prompts</h3>
+          <p>Keys arrive only through CI secrets and environment variables. A <code>gitleaks</code> hook guards every commit, and failure logs carry exception type names, never messages.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="telemetry">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>The loop, live</h2>
+        <p>These numbers come from the production database, republished nightly through a sanitized export that is physically unable to query private fields.</p>
+      </div>
+      <p class="stamp"><span class="dot">&#9679;</span> <span id="stamp-text">Snapshot loading&hellip;</span></p>
+
+      <div class="tiles" id="tiles"></div>
+
+      <div class="charts">
+        <div class="chart">
+          <h3>Scheduled runs by mode</h3>
+          <p class="sub">Every unattended pass the loop has completed</p>
+          <div id="runs-bars"></div>
+        </div>
+        <div class="chart">
+          <h3>Validator rejections by reason</h3>
+          <p class="sub">Model responses discarded by the deterministic gauntlet</p>
+          <div id="rej-bars"></div>
+        </div>
+      </div>
+
+      <div class="gauntlet-note" id="gauntlet-note" hidden>
+        <strong>The rails are load-bearing.</strong> <span id="gauntlet-text"></span>
+      </div>
+
+      <div class="empty-cal" id="empty-cal" hidden>
+        <h3>Calibration comes with a track record</h3>
+        <p>Once graded theses accumulate, this section charts stated confidence against observed hit rate, per sleeve. The system is young; the honest chart today is no chart.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="engineering">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Under the hood</h2>
+      </div>
+      <div class="eng">
+        <div class="eng-item"><h3>Python 3.11 + SQLite</h3><p>The entire memory is one inspectable database file, versioned by the CI runner itself.</p></div>
+        <div class="eng-item"><h3>Strict Pydantic schemas</h3><p>Model output parses against extra-forbidding schemas before any other check runs.</p></div>
+        <div class="eng-item"><h3>GitHub Actions cron</h3><p>Five schedules: three market-day cycles, a nightly discover-grade-brief pass, a Sunday self-review.</p></div>
+        <div class="eng-item"><h3>Dual LLM providers</h3><p>Gemini and Groq behind one seam, with fallback, so no single provider outage stops the loop.</p></div>
+        <div class="eng-item"><h3>433 tests, adversarially reviewed</h3><p>Validator contracts are pinned by tests written before the code, plus independent security and spec audits.</p></div>
+        <div class="eng-item"><h3>Sanitized public export</h3><p>The page you are reading. Its generator contains only aggregate queries, so leaking private data has no code path.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="compliance">Recommendations only. AlphaLoop never places or manages any position. Not financial advice.</p>
+    <p class="privacy">This site publishes aggregate telemetry: run health, rejection counts, and calibration. Holdings, watchlists, tickers, theses, and model-authored text never leave the private repository.</p>
+    <p class="byline">Built by <a href="https://github.com/romina-jately">Romina Jately</a></p>
+  </div>
+</footer>
+
+<script>
+  const FALLBACK = {
+    "calibration": {},
+    "generated_at": "2026-07-09T01:13:29+00:00",
+    "lessons_count": 0,
+    "rejections": { "parse_error": 7 },
+    "runs": {
+      "counts": { "brief:ok": 1, "cycle:ok": 6, "discover:ok": 1, "grade:ok": 1 },
+      "latest_finished_at": "2026-07-08T20:43:18+00:00"
+    },
+    "theses": {
+      "by_sleeve": {},
+      "overall": { "confirmed": 0, "hit_rate": null, "invalidated": 0, "open": 0, "total": 0 }
+    }
+  };
+
+  const REASON_LABELS = {
+    parse_error: "schema parse",
+    unknown_ticker: "unknown ticker",
+    price_mismatch: "price mismatch",
+    bad_rating: "bad rating",
+    bad_sleeve: "wrong sleeve",
+    bad_verdict: "bad verdict",
+    missing_catalyst: "no catalyst",
+    missing_signposts: "no signposts",
+    missing_risk_fields: "no risk fields",
+    subject_mismatch: "subject swap",
+    concentration: "concentration",
+    pileup: "pileup",
+    duplicate: "duplicate"
+  };
+
+  function tile(value, label, suffix) {
+    return '<div class="tile"><div class="num">' + value + (suffix ? '<small>' + suffix + '</small>' : '') + '</div><div class="lbl">' + label + '</div></div>';
+  }
+
+  function bars(el, entries) {
+    if (!entries.length) {
+      el.innerHTML = '<p class="sub">Nothing recorded yet.</p>';
+      return;
+    }
+    const max = Math.max.apply(null, entries.map(function (e) { return e[1]; }));
+    el.innerHTML = entries.map(function (e) {
+      const pct = Math.max(2, Math.round(e[1] / max * 100));
+      return '<div class="brow"><span class="k">' + e[0] + '</span><span class="track"><span class="fill" style="width:' + pct + '%"></span></span><span class="v">' + e[1] + '</span></div>';
+    }).join('');
+  }
+
+  function render(d) {
+    const runCounts = d.runs && d.runs.counts ? d.runs.counts : {};
+    let runsOk = 0, runsAll = 0;
+    const byMode = {};
+    Object.keys(runCounts).forEach(function (key) {
+      const parts = key.split(':');
+      const n = runCounts[key];
+      runsAll += n;
+      if (parts[1] === 'ok') runsOk += n;
+      byMode[parts[0]] = (byMode[parts[0]] || 0) + n;
+    });
+    const rej = d.rejections || {};
+    const rejTotal = Object.keys(rej).reduce(function (s, k) { return s + rej[k]; }, 0);
+    const o = (d.theses && d.theses.overall) || {};
+    const graded = (o.confirmed || 0) + (o.invalidated || 0);
+
+    document.getElementById('tiles').innerHTML =
+      tile(runsAll, 'scheduled runs completed') +
+      tile(runsAll ? Math.round(runsOk / runsAll * 100) : 0, 'run success rate', '%') +
+      tile(rejTotal, 'responses rejected by the gauntlet') +
+      tile(o.total || 0, 'theses stored (validated only)') +
+      tile(graded, 'theses graded') +
+      tile(d.lessons_count || 0, 'lessons in memory');
+
+    bars(document.getElementById('runs-bars'),
+      Object.keys(byMode).map(function (m) { return [m, byMode[m]]; }).sort(function (a, b) { return b[1] - a[1]; }));
+    bars(document.getElementById('rej-bars'),
+      Object.keys(rej).map(function (r) { return [REASON_LABELS[r] || r, rej[r]]; }).sort(function (a, b) { return b[1] - a[1]; }));
+
+    if (rejTotal > 0 && (o.total || 0) === 0) {
+      document.getElementById('gauntlet-text').textContent =
+        'So far the gauntlet has rejected every model response it has seen (' + rejTotal +
+        ' of ' + rejTotal + '). Nothing unvalidated has ever reached storage or a notification.';
+      document.getElementById('gauntlet-note').hidden = false;
+    }
+
+    const hasCal = d.calibration && Object.keys(d.calibration).length > 0;
+    document.getElementById('empty-cal').hidden = hasCal;
+
+    const when = d.generated_at ? new Date(d.generated_at) : null;
+    document.getElementById('stamp-text').textContent = when
+      ? 'Snapshot generated ' + when.toUTCString().replace(':' + String(when.getUTCSeconds()).padStart(2, '0') + ' GMT', ' UTC')
+      : 'Snapshot time unavailable';
+  }
+
+  fetch('alphaloop.json', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : FALLBACK; })
+    .catch(function () { return FALLBACK; })
+    .then(render);
+</script>
+
+</body>
+</html>

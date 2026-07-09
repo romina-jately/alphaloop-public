@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AlphaLoop: a self-grading equity research loop</title>
-<meta name="description" content="An autonomous research loop that drafts investment theses with LLMs, validates every claim deterministically, and grades its own track record. Public aggregate telemetry only.">
+<title>AlphaLoop: an AI analyst that keeps score on itself</title>
+<meta name="description" content="An AI research analyst that makes investment calls, keeps score of whether it was right, and learns from its misses. Aggregate telemetry only: no holdings, no tickers, no model text.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23131110'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23d4a256' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <style>
   :root {
@@ -46,24 +46,24 @@
   .header-note { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
 
   /* ---------- hero ---------- */
-  .hero { padding: 88px 0 72px; }
+  .hero { padding: 52px 0 44px; }
   .hero h1 {
     font-family: var(--serif);
     font-weight: 400;
-    font-size: clamp(32px, 4.4vw, 50px);
+    font-size: clamp(30px, 4vw, 46px);
     line-height: 1.12;
     letter-spacing: -0.01em;
-    max-width: 24ch;
+    max-width: 26ch;
   }
   .hero h1 em { font-style: italic; color: var(--ember); }
   .hero p.lede {
-    margin-top: 22px;
+    margin-top: 18px;
     font-size: 18px;
     color: var(--ink-2);
-    max-width: 52ch;
+    max-width: 56ch;
   }
   .hero .scope {
-    margin-top: 30px;
+    margin-top: 24px;
     display: inline-block;
     font-family: var(--mono);
     font-size: 12.5px;
@@ -76,8 +76,8 @@
   .hero .scope strong { color: var(--ink); font-weight: 600; }
 
   /* ---------- sections ---------- */
-  section { padding: 68px 0; border-top: 1px solid var(--line-soft); }
-  .sec-head { max-width: 62ch; margin-bottom: 40px; }
+  section { padding: 64px 0; border-top: 1px solid var(--line-soft); }
+  .sec-head { max-width: 62ch; margin-bottom: 36px; }
   .sec-head h2 {
     font-family: var(--serif);
     font-weight: 400;
@@ -86,6 +86,90 @@
     line-height: 1.2;
   }
   .sec-head p { margin-top: 12px; color: var(--ink-2); }
+
+  /* ---------- scoreboard ---------- */
+  #scoreboard { padding-top: 44px; }
+  .stamp { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-bottom: 28px; }
+  .stamp .dot { color: var(--ok); }
+  .stamp.stale .dot { color: var(--ember); }
+  .tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px 32px; margin-bottom: 44px; }
+  .tile { border-top: 1px solid var(--line); padding-top: 14px; }
+  .tile .num { font-family: var(--mono); font-size: 34px; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .tile .num small { font-size: 16px; color: var(--ink-3); }
+  .tile .num .na { font-family: var(--mono); font-size: 15px; color: var(--ink-3); }
+  .tile .lbl { margin-top: 6px; font-size: 13.5px; color: var(--ink-2); }
+
+  .rates-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 14px; }
+  .rates { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .rate-card { background: var(--surface); border: 1px solid var(--line-soft); border-radius: 10px; padding: 20px 24px 22px; }
+  .rate-card .rk { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ember); }
+  .rate-card .rv { font-family: var(--mono); font-size: 42px; margin-top: 8px; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .rate-card .rv.none { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-2); line-height: 1.35; padding: 10px 0 6px; }
+  .rate-card .rs { margin-top: 7px; font-size: 13.5px; color: var(--ink-3); }
+  .gap-note { margin-top: 12px; font-size: 13.5px; color: var(--ink-3); }
+
+  .bench {
+    margin-top: 36px;
+    border-left: 2px solid var(--ember-bar);
+    padding: 4px 0 4px 20px;
+    max-width: 70ch;
+    color: var(--ink-2);
+    font-size: 15px;
+  }
+  .bench strong { color: var(--ink); }
+
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 52px; }
+  .chart h3 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .chart .sub { font-size: 13px; color: var(--ink-3); margin-bottom: 18px; }
+  .brow { display: grid; grid-template-columns: 130px 1fr 44px; align-items: center; gap: 12px; padding: 7px 0; }
+  .brow .k { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); }
+  .brow .track { height: 10px; position: relative; }
+  .brow .fill { height: 10px; background: var(--ember-bar); border-radius: 0 4px 4px 0; min-width: 3px; }
+  .brow .v { font-family: var(--mono); font-size: 13px; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+
+  .gauntlet-note {
+    margin-top: 44px;
+    border-left: 2px solid var(--ember-bar);
+    padding: 4px 0 4px 20px;
+    max-width: 68ch;
+    color: var(--ink-2);
+    font-size: 15px;
+  }
+  .gauntlet-note strong { color: var(--ink); }
+
+  /* ---------- confidence chart ---------- */
+  .calwrap { background: var(--surface); border: 1px solid var(--line-soft); border-radius: 10px; padding: 24px 26px 20px; }
+  .callegend { display: flex; gap: 24px; flex-wrap: wrap; font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); margin-bottom: 14px; }
+  .callegend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 7px; }
+  .calwrap svg { width: 100%; height: auto; display: block; }
+  .empty-box {
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    padding: 34px 30px;
+    text-align: center;
+  }
+  .empty-box h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 19px; }
+  .empty-box p { margin-top: 8px; color: var(--ink-3); font-size: 14px; max-width: 60ch; margin-left: auto; margin-right: auto; }
+
+  /* ---------- lessons ---------- */
+  .lessons-list { list-style: none; }
+  .lessons-list li {
+    border-left: 2px solid var(--ember-bar);
+    padding: 8px 0 8px 20px;
+    margin-bottom: 20px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    max-width: 68ch;
+  }
+
+  /* ---------- a look inside ---------- */
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  figure.shot { background: var(--surface); border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; margin: 0; }
+  figure.shot img { width: 100%; display: block; }
+  figure.shot figcaption { padding: 12px 16px 16px; font-size: 13.5px; color: var(--ink-2); }
+  figure.shot[data-missing] { display: none; }
 
   /* ---------- pipeline ---------- */
   .pipeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; }
@@ -100,44 +184,6 @@
   .rail h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 20px; line-height: 1.3; }
   .rail p { color: var(--ink-2); font-size: 15px; max-width: 62ch; }
   .rail p code { font-family: var(--mono); font-size: 13px; color: var(--ink); background: var(--surface); border: 1px solid var(--line-soft); border-radius: 4px; padding: 1px 6px; }
-
-  /* ---------- telemetry ---------- */
-  .stamp { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-bottom: 28px; }
-  .stamp .dot { color: var(--ok); }
-  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 40px; margin-bottom: 56px; }
-  .tile { border-top: 1px solid var(--line); padding-top: 14px; }
-  .tile .num { font-family: var(--mono); font-size: 34px; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .tile .num small { font-size: 16px; color: var(--ink-3); }
-  .tile .lbl { margin-top: 6px; font-size: 13.5px; color: var(--ink-2); }
-
-  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
-  .chart h3 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
-  .chart .sub { font-size: 13px; color: var(--ink-3); margin-bottom: 18px; }
-  .brow { display: grid; grid-template-columns: 110px 1fr 44px; align-items: center; gap: 12px; padding: 7px 0; }
-  .brow .k { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); }
-  .brow .track { height: 10px; position: relative; }
-  .brow .fill { height: 10px; background: var(--ember-bar); border-radius: 0 4px 4px 0; min-width: 3px; }
-  .brow .v { font-family: var(--mono); font-size: 13px; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
-
-  .gauntlet-note {
-    margin-top: 48px;
-    border-left: 2px solid var(--ember-bar);
-    padding: 4px 0 4px 20px;
-    max-width: 68ch;
-    color: var(--ink-2);
-    font-size: 15px;
-  }
-  .gauntlet-note strong { color: var(--ink); }
-
-  .empty-cal {
-    margin-top: 56px;
-    border: 1px dashed var(--line);
-    border-radius: 10px;
-    padding: 34px 30px;
-    text-align: center;
-  }
-  .empty-cal h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 19px; }
-  .empty-cal p { margin-top: 8px; color: var(--ink-3); font-size: 14px; max-width: 56ch; margin-left: auto; margin-right: auto; }
 
   /* ---------- engineering ---------- */
   .eng { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 56px; }
@@ -162,13 +208,15 @@
 
   /* ---------- mobile ---------- */
   @media (max-width: 860px) {
-    .hero { padding: 56px 0 48px; }
+    .hero { padding: 40px 0 36px; }
     section { padding: 52px 0; }
+    .tiles { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .rates { grid-template-columns: 1fr; }
+    .charts { grid-template-columns: 1fr; gap: 44px; }
+    .shots { grid-template-columns: 1fr; }
     .pipeline { grid-template-columns: 1fr; }
     .stage .arrow { display: none; }
     .rail { grid-template-columns: 1fr; gap: 8px; }
-    .tiles { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .charts { grid-template-columns: 1fr; gap: 44px; }
     .eng { grid-template-columns: 1fr; }
   }
 </style>
@@ -185,24 +233,103 @@
 <main>
   <div class="wrap">
     <div class="hero">
-      <h1 class="reveal">A research loop that <em>grades its own homework</em>.</h1>
-      <p class="lede reveal d1">AlphaLoop drafts investment theses with LLMs, refuses to trust a single word of them, and scores every call it survives.</p>
+      <h1 class="reveal">An AI research analyst that <em>keeps score on itself</em>.</h1>
+      <p class="lede reveal d1">It makes investment calls, tracks whether each one turned out right, and learns from its misses. Everything below is its live, unedited record.</p>
       <p class="scope reveal d2"><strong>Aggregates only.</strong> This page never shows holdings, tickers, or model text.</p>
     </div>
   </div>
 
+  <section id="scoreboard">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>The score so far</h2>
+        <p>Every number here comes from the system's own database, republished through a sanitized export that is physically unable to query private fields.</p>
+      </div>
+      <p class="stamp" id="stamp"><span class="dot">&#9679;</span> <span id="stamp-text">Snapshot loading&hellip;</span></p>
+
+      <div class="tiles" id="tiles"></div>
+
+      <h3 class="rates-title">How often is it right?</h3>
+      <div class="rates" id="rates"></div>
+      <p class="gap-note">Long-term calls and quick trades are two different games, so they are scored separately. Whichever number is worse stays on this page.</p>
+
+      <div class="bench" id="bench"></div>
+
+      <div class="charts">
+        <div class="chart">
+          <h3>Bad outputs caught, by reason</h3>
+          <p class="sub">Model responses discarded by deterministic validators before they could reach anyone</p>
+          <div id="rej-bars"></div>
+        </div>
+        <div class="chart">
+          <h3>Unattended runs, by job</h3>
+          <p class="sub">Every scheduled pass the system has completed on its own</p>
+          <div id="runs-bars"></div>
+        </div>
+      </div>
+
+      <div class="gauntlet-note" id="gauntlet-note" hidden>
+        <strong>The rails are load-bearing.</strong> <span id="gauntlet-text"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="confidence">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Does its confidence mean anything?</h2>
+        <p>Every call states how confident the system is. This chart is the test: stated confidence against how often those calls actually proved right. Dots on the diagonal mean the confidence is honest.</p>
+      </div>
+      <div id="cal-slot"></div>
+    </div>
+  </section>
+
+  <section id="lessons">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>What it learned</h2>
+        <p>When a scored miss produces a lesson, it is written down and injected into future prompts. After owner review, lessons are published here word for word.</p>
+      </div>
+      <div id="lessons-slot"></div>
+    </div>
+  </section>
+
+  <section id="inside">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>A look inside</h2>
+        <p>The dashboard itself stays private. These screenshots come from a demonstration copy seeded with sample data, so nothing real ships.</p>
+      </div>
+      <div class="shots" id="shots">
+        <figure class="shot">
+          <img src="shots/daily.png" alt="The daily dashboard view" loading="lazy" onerror="this.closest('figure').dataset.missing='1'">
+          <figcaption>The morning view: open calls, their current status, and what would prove each one wrong.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/track-record.png" alt="The track record view" loading="lazy" onerror="this.closest('figure').dataset.missing='1'">
+          <figcaption>The track record: every call ever made, scored right or wrong, nothing deleted.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="shots/chat.png" alt="The ask-about-a-stock chat view" loading="lazy" onerror="this.closest('figure').dataset.missing='1'">
+          <figcaption>Ask it about a stock: every dollar figure in a reply is checked against verified data before it renders.</figcaption>
+        </figure>
+      </div>
+      <p class="empty-box" id="shots-empty" hidden>Screenshots are being prepared from a demonstration copy of the dashboard, seeded with sample data so nothing private ships. They will appear here.</p>
+    </div>
+  </section>
+
   <section id="loop">
     <div class="wrap">
       <div class="sec-head">
-        <h2>One loop, six moves</h2>
-        <p>The whole system is a scheduled cycle. Each pass runs unattended on CI cron and leaves a full audit trail in a single SQLite file.</p>
+        <h2>How the loop works</h2>
+        <p>The whole system is one scheduled loop. Each pass runs unattended on CI cron and leaves a full audit trail in a single SQLite file.</p>
       </div>
       <div class="pipeline">
         <div class="stage"><span class="arrow">&rarr;</span><h3>Ingest</h3><p>Prices, SEC filings, news feeds, and social sentiment are pulled on a market-day schedule and stored as deduplicated events.</p></div>
-        <div class="stage"><span class="arrow">&rarr;</span><h3>Synthesize</h3><p>Two LLM providers draft theses in strict JSON: a claim, a confidence, a catalyst, and the condition that would kill the idea.</p></div>
+        <div class="stage"><span class="arrow">&rarr;</span><h3>Synthesize</h3><p>Two LLM providers draft calls in strict JSON: a claim, a stated confidence, what's driving it, and the condition that would prove it wrong.</p></div>
         <div class="stage"><span class="arrow">&darr;</span><h3>Validate</h3><p>A deterministic gauntlet checks every field against real symbol lists and freshly fetched prices. Any failure means discard and log.</p></div>
         <div class="stage"><span class="arrow">&rarr;</span><h3>Notify</h3><p>Only validated calls reach email and push. Every send passes a compliance gate and a dedup check, so nothing fires twice.</p></div>
-        <div class="stage"><span class="arrow">&rarr;</span><h3>Grade</h3><p>When a thesis resolves, the system scores it against price data: confirmed or invalidated, no partial credit.</p></div>
+        <div class="stage"><span class="arrow">&rarr;</span><h3>Score</h3><p>When a call's clock runs out, the system scores it against price data: right or wrong, no partial credit.</p></div>
         <div class="stage"><h3>Reflect</h3><p>Missed calls become written lessons, stored and injected into future prompts. The loop gets better by remembering, not by retraining.</p></div>
       </div>
     </div>
@@ -221,7 +348,7 @@
         </div>
         <div class="rail">
           <h3>Learning is memory, not weights</h3>
-          <p>Nothing is fine-tuned. Graded outcomes and written lessons live in SQLite and are re-injected into future prompts, so the system improves while staying fully inspectable.</p>
+          <p>Nothing is fine-tuned. Scored outcomes and written lessons live in SQLite and are re-injected into future prompts, so the system improves while staying fully inspectable.</p>
         </div>
         <div class="rail">
           <h3>Recommendations only, by constitution</h3>
@@ -235,40 +362,6 @@
     </div>
   </section>
 
-  <section id="telemetry">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2>The loop, live</h2>
-        <p>These numbers come from the production database, republished nightly through a sanitized export that is physically unable to query private fields.</p>
-      </div>
-      <p class="stamp"><span class="dot">&#9679;</span> <span id="stamp-text">Snapshot loading&hellip;</span></p>
-
-      <div class="tiles" id="tiles"></div>
-
-      <div class="charts">
-        <div class="chart">
-          <h3>Scheduled runs by mode</h3>
-          <p class="sub">Every unattended pass the loop has completed</p>
-          <div id="runs-bars"></div>
-        </div>
-        <div class="chart">
-          <h3>Validator rejections by reason</h3>
-          <p class="sub">Model responses discarded by the deterministic gauntlet</p>
-          <div id="rej-bars"></div>
-        </div>
-      </div>
-
-      <div class="gauntlet-note" id="gauntlet-note" hidden>
-        <strong>The rails are load-bearing.</strong> <span id="gauntlet-text"></span>
-      </div>
-
-      <div class="empty-cal" id="empty-cal" hidden>
-        <h3>Calibration comes with a track record</h3>
-        <p>Once graded theses accumulate, this section charts stated confidence against observed hit rate, per sleeve. The system is young; the honest chart today is no chart.</p>
-      </div>
-    </div>
-  </section>
-
   <section id="engineering">
     <div class="wrap">
       <div class="sec-head">
@@ -277,7 +370,7 @@
       <div class="eng">
         <div class="eng-item"><h3>Python 3.11 + SQLite</h3><p>The entire memory is one inspectable database file, versioned by the CI runner itself.</p></div>
         <div class="eng-item"><h3>Strict Pydantic schemas</h3><p>Model output parses against extra-forbidding schemas before any other check runs.</p></div>
-        <div class="eng-item"><h3>GitHub Actions cron</h3><p>Five schedules: three market-day cycles, a nightly discover-grade-brief pass, a Sunday self-review.</p></div>
+        <div class="eng-item"><h3>GitHub Actions cron</h3><p>Five schedules: three market-day checks, a nightly idea hunt with scoring and the daily email, a Sunday self-review.</p></div>
         <div class="eng-item"><h3>Dual LLM providers</h3><p>Gemini and Groq behind one seam, with fallback, so no single provider outage stops the loop.</p></div>
         <div class="eng-item"><h3>433 tests, adversarially reviewed</h3><p>Validator contracts are pinned by tests written before the code, plus independent security and spec audits.</p></div>
         <div class="eng-item"><h3>Sanitized public export</h3><p>The page you are reading. Its generator contains only aggregate queries, so leaking private data has no code path.</p></div>
@@ -295,9 +388,28 @@
 </footer>
 
 <script>
-  const FALLBACK = {
-    "calibration": {},
+(function () {
+  'use strict';
+
+  /* Last saved snapshot, embedded so the page renders even when the live
+     JSON cannot be fetched (e.g. opened straight from file://). Shape
+     matches the Phase 11 export contract; sparse values stay honest. */
+  var FALLBACK = {
     "generated_at": "2026-07-09T01:13:29+00:00",
+    "scoreboard": {
+      "calls_total": 0,
+      "calls_graded": 0,
+      "calls_open": 0,
+      "days_running": null,
+      "validators_caught": 7
+    },
+    "hit_rates": {
+      "long_term": { "graded": 0, "hit": 0, "rate": null },
+      "quick_trades": { "graded": 0, "hit": 0, "rate": null }
+    },
+    "benchmark": { "avg_excess_vs_spy": null, "graded_with_benchmark": 0 },
+    "lessons": [],
+    "calibration": {},
     "lessons_count": 0,
     "rejections": { "parse_error": 7 },
     "runs": {
@@ -310,12 +422,12 @@
     }
   };
 
-  const REASON_LABELS = {
+  var REASON_LABELS = {
     parse_error: "schema parse",
     unknown_ticker: "unknown ticker",
     price_mismatch: "price mismatch",
     bad_rating: "bad rating",
-    bad_sleeve: "wrong sleeve",
+    bad_sleeve: "wrong group",
     bad_verdict: "bad verdict",
     missing_catalyst: "no catalyst",
     missing_signposts: "no signposts",
@@ -326,71 +438,300 @@
     duplicate: "duplicate"
   };
 
-  function tile(value, label, suffix) {
-    return '<div class="tile"><div class="num">' + value + (suffix ? '<small>' + suffix + '</small>' : '') + '</div><div class="lbl">' + label + '</div></div>';
+  var MODE_LABELS = {
+    cycle: "check",
+    brief: "daily email",
+    discover: "idea hunt",
+    grade: "scoring",
+    weekly: "weekly report",
+    advisor: "stock Q&A",
+    daytrade: "quick-trade check",
+    "notify-test": "notification test",
+    notify_test: "notification test"
+  };
+
+  var GROUPS = [
+    { keys: ["long_term"], label: "Long-term calls", color: "#d4a256",
+      emptySub: "Long-term calls take months to resolve. Scores appear here as they do." },
+    { keys: ["quick_trades", "day_trade"], label: "Quick trades", color: "#7fa36b",
+      emptySub: "Quick trades resolve within days, so this number will move first." }
+  ];
+
+  function el(id) { return document.getElementById(id); }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
   }
 
-  function bars(el, entries) {
+  function isNum(v) { return typeof v === "number" && isFinite(v); }
+
+  function pick(v, alt) { return isNum(v) ? v : alt; }
+
+  function pct(rate) { return isNum(rate) ? Math.round(rate * 100) + "%" : null; }
+
+  function confPhrase(mid) {
+    if (mid >= 80) return "very confident";
+    if (mid >= 65) return "fairly confident";
+    if (mid >= 50) return "lukewarm";
+    return "low conviction";
+  }
+
+  function fmtWhen(iso) {
+    if (!iso) return null;
+    var t = new Date(iso);
+    if (isNaN(t.getTime())) return null;
+    return t.toUTCString().replace(/:\d\d GMT$/, " UTC");
+  }
+
+  function tile(value, label) {
+    var shown = isNum(value) ? String(value) : '<span class="na">n/a</span>';
+    return '<div class="tile"><div class="num">' + shown + '</div><div class="lbl">' + esc(label) + '</div></div>';
+  }
+
+  function bars(target, entries) {
     if (!entries.length) {
-      el.innerHTML = '<p class="sub">Nothing recorded yet.</p>';
+      target.innerHTML = '<p class="sub">Nothing recorded yet.</p>';
       return;
     }
-    const max = Math.max.apply(null, entries.map(function (e) { return e[1]; }));
-    el.innerHTML = entries.map(function (e) {
-      const pct = Math.max(2, Math.round(e[1] / max * 100));
-      return '<div class="brow"><span class="k">' + e[0] + '</span><span class="track"><span class="fill" style="width:' + pct + '%"></span></span><span class="v">' + e[1] + '</span></div>';
-    }).join('');
+    var max = entries.reduce(function (m, e) { return Math.max(m, e[1]); }, 1);
+    target.innerHTML = entries.map(function (e) {
+      var w = Math.max(2, Math.round(e[1] / max * 100));
+      return '<div class="brow"><span class="k">' + esc(e[0]) + '</span><span class="track"><span class="fill" style="width:' + w + '%"></span></span><span class="v">' + e[1] + '</span></div>';
+    }).join("");
   }
 
-  function render(d) {
-    const runCounts = d.runs && d.runs.counts ? d.runs.counts : {};
-    let runsOk = 0, runsAll = 0;
-    const byMode = {};
-    Object.keys(runCounts).forEach(function (key) {
-      const parts = key.split(':');
-      const n = runCounts[key];
-      runsAll += n;
-      if (parts[1] === 'ok') runsOk += n;
-      byMode[parts[0]] = (byMode[parts[0]] || 0) + n;
+  /* Pull one group's record from hit_rates, falling back to the older
+     theses.by_sleeve aggregate when the new key is absent. */
+  function groupRecord(d, group) {
+    var hr = d.hit_rates || {};
+    for (var i = 0; i < group.keys.length; i++) {
+      var g = hr[group.keys[i]];
+      if (g && isNum(g.graded)) {
+        return { graded: g.graded, hit: pick(g.hit, null), rate: isNum(g.rate) ? g.rate : null };
+      }
+    }
+    var bs = (d.theses && d.theses.by_sleeve) || {};
+    for (var j = 0; j < group.keys.length; j++) {
+      var s = bs[group.keys[j]];
+      if (s) {
+        var confirmed = pick(s.confirmed, 0);
+        var graded = confirmed + pick(s.invalidated, 0);
+        return { graded: graded, hit: confirmed, rate: isNum(s.hit_rate) ? s.hit_rate : null };
+      }
+    }
+    return { graded: 0, hit: 0, rate: null };
+  }
+
+  function rateCard(group, rec) {
+    var body;
+    if (rec.graded > 0 && rec.rate != null) {
+      var sub = rec.hit != null
+        ? "right on " + rec.hit + " of " + rec.graded + " scored calls"
+        : rec.graded + " scored calls";
+      body = '<div class="rv">' + pct(rec.rate) + '</div><div class="rs">' + esc(sub) + "</div>";
+    } else {
+      body = '<div class="rv none">No scored calls yet.</div><div class="rs">' + esc(group.emptySub) + "</div>";
+    }
+    return '<div class="rate-card"><div class="rk">' + esc(group.label) + "</div>" + body + "</div>";
+  }
+
+  function benchText(d) {
+    var b = d.benchmark || {};
+    var n = pick(b.graded_with_benchmark, 0);
+    var v = isNum(b.avg_excess_vs_spy) ? b.avg_excess_vs_spy : null;
+    if (n > 0 && v != null) {
+      var pts = (Math.abs(v) * 100).toFixed(1) + " percentage points";
+      var count = n + " call" + (n === 1 ? "" : "s") + " measured";
+      if (v > 0.0005) {
+        return "<strong>Versus the S&amp;P 500:</strong> scored calls have beaten the index by an average of " + pts + " each, over the same holding window (" + count + ").";
+      }
+      if (v < -0.0005) {
+        return "<strong>Versus the S&amp;P 500:</strong> scored calls have trailed the index by an average of " + pts + " each, over the same holding window (" + count + "). That number stays on the page.";
+      }
+      return "<strong>Versus the S&amp;P 500:</strong> scored calls have matched the index on average (" + count + ").";
+    }
+    return "<strong>Versus the S&amp;P 500:</strong> not measured yet. Every scored call gets compared against the index over the same holding window, and the average gap, good or bad, is published here.";
+  }
+
+  /* ---------- confidence chart (inline SVG) ---------- */
+  function calChart(cal) {
+    cal = cal || {};
+    var series = [];
+    GROUPS.forEach(function (group) {
+      for (var i = 0; i < group.keys.length; i++) {
+        var rows = cal[group.keys[i]];
+        if (rows && rows.length) {
+          var pts = rows.filter(function (r) {
+            return isNum(r.bucket) && isNum(r.n) && r.n > 0 && isNum(r.hit_rate);
+          }).sort(function (a, b) { return a.bucket - b.bucket; });
+          if (pts.length) series.push({ group: group, pts: pts });
+          break;
+        }
+      }
     });
-    const rej = d.rejections || {};
-    const rejTotal = Object.keys(rej).reduce(function (s, k) { return s + rej[k]; }, 0);
-    const o = (d.theses && d.theses.overall) || {};
-    const graded = (o.confirmed || 0) + (o.invalidated || 0);
+    if (!series.length) return null;
 
-    document.getElementById('tiles').innerHTML =
-      tile(runsAll, 'scheduled runs completed') +
-      tile(runsAll ? Math.round(runsOk / runsAll * 100) : 0, 'run success rate', '%') +
-      tile(rejTotal, 'responses rejected by the gauntlet') +
-      tile(o.total || 0, 'theses stored (validated only)') +
-      tile(graded, 'theses graded') +
-      tile(d.lessons_count || 0, 'lessons in memory');
+    var W = 640, H = 380, L = 60, R = 18, T = 18, B = 48;
+    function px(v) { return L + (v / 100) * (W - L - R); }
+    function py(v) { return T + (1 - v / 100) * (H - T - B); }
+    var s = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Stated confidence versus share of calls that proved right">';
+    [0, 25, 50, 75, 100].forEach(function (v) {
+      s += '<line x1="' + px(v) + '" y1="' + py(0) + '" x2="' + px(v) + '" y2="' + py(100) + '" stroke="#221e19" stroke-width="1"/>';
+      s += '<line x1="' + px(0) + '" y1="' + py(v) + '" x2="' + px(100) + '" y2="' + py(v) + '" stroke="#221e19" stroke-width="1"/>';
+      s += '<text x="' + px(v) + '" y="' + (py(0) + 20) + '" fill="#8a8071" font-size="11" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">' + v + "%</text>";
+      s += '<text x="' + (px(0) - 10) + '" y="' + (py(v) + 4) + '" fill="#8a8071" font-size="11" text-anchor="end" font-family="ui-monospace,Menlo,monospace">' + v + "%</text>";
+    });
+    s += '<line x1="' + px(0) + '" y1="' + py(0) + '" x2="' + px(100) + '" y2="' + py(100) + '" stroke="#8a8071" stroke-width="1" stroke-dasharray="5 5"/>';
+    s += '<text x="' + px(56) + '" y="' + (py(62)) + '" fill="#8a8071" font-size="11" font-family="ui-monospace,Menlo,monospace">perfectly honest</text>';
+    s += '<text x="' + (L + (W - L - R) / 2) + '" y="' + (H - 8) + '" fill="#b3a996" font-size="12" text-anchor="middle">stated confidence</text>';
+    s += '<text x="14" y="' + (T + (H - T - B) / 2) + '" fill="#b3a996" font-size="12" text-anchor="middle" transform="rotate(-90 14 ' + (T + (H - T - B) / 2) + ')">share that proved right</text>';
 
-    bars(document.getElementById('runs-bars'),
-      Object.keys(byMode).map(function (m) { return [m, byMode[m]]; }).sort(function (a, b) { return b[1] - a[1]; }));
-    bars(document.getElementById('rej-bars'),
-      Object.keys(rej).map(function (r) { return [REASON_LABELS[r] || r, rej[r]]; }).sort(function (a, b) { return b[1] - a[1]; }));
+    series.forEach(function (sr) {
+      var color = sr.group.color;
+      if (sr.pts.length > 1) {
+        var path = sr.pts.map(function (p, i) {
+          return (i === 0 ? "M" : "L") + px(Math.min(p.bucket + 5, 100)) + " " + py(p.hit_rate * 100);
+        }).join(" ");
+        s += '<path d="' + path + '" fill="none" stroke="' + color + '" stroke-width="1.5" opacity="0.55"/>';
+      }
+      sr.pts.forEach(function (p) {
+        var mid = Math.min(p.bucket + 5, 100);
+        var r = 5 + Math.min(6, Math.sqrt(p.n) * 1.6);
+        var hits = isNum(p.hits) ? p.hits : Math.round(p.hit_rate * p.n);
+        var tip = sr.group.label + ", stated " + p.bucket + " to " + Math.min(p.bucket + 9, 100) +
+          " (" + confPhrase(mid) + "): right " + hits + " of " + p.n + " times (" + pct(p.hit_rate) + ")";
+        s += '<circle cx="' + px(mid) + '" cy="' + py(p.hit_rate * 100) + '" r="' + r.toFixed(1) + '" fill="' + color + '" fill-opacity="0.85" stroke="#131110" stroke-width="1.5"><title>' + esc(tip) + "</title></circle>";
+      });
+    });
+    s += "</svg>";
 
-    if (rejTotal > 0 && (o.total || 0) === 0) {
-      document.getElementById('gauntlet-text').textContent =
-        'So far the gauntlet has rejected every model response it has seen (' + rejTotal +
-        ' of ' + rejTotal + '). Nothing unvalidated has ever reached storage or a notification.';
-      document.getElementById('gauntlet-note').hidden = false;
+    var legend = '<div class="callegend">' + series.map(function (sr) {
+      var total = sr.pts.reduce(function (t, p) { return t + p.n; }, 0);
+      return '<span><span class="sw" style="background:' + sr.group.color + '"></span>' + esc(sr.group.label) + " (" + total + " scored)</span>";
+    }).join("") + "<span>dot size = number of scored calls</span></div>";
+
+    return '<div class="calwrap">' + legend + s + "</div>";
+  }
+
+  function calEmpty() {
+    return '<div class="empty-box"><h3>The honest chart today is no chart</h3>' +
+      "<p>No calls have been scored yet, so there is nothing truthful to plot. Once they resolve, each dot here will show a confidence level the system stated (\"fairly confident\", \"very confident\") against how often calls at that level actually proved right, separately for long-term calls and quick trades. Quick trades resolve within days, so those dots land first; long-term calls follow over months. Nothing on this page is ever simulated.</p></div>";
+  }
+
+  function lessonsHtml(d) {
+    var lessons = Array.isArray(d.lessons) ? d.lessons.filter(function (x) {
+      return typeof x === "string" && x.trim().length > 0;
+    }) : [];
+    if (lessons.length) {
+      return '<ul class="lessons-list">' + lessons.map(function (t) {
+        return "<li>" + esc(t) + "</li>";
+      }).join("") + "</ul>";
+    }
+    return '<div class="empty-box"><h3>Nothing yet, and that is the honest answer</h3>' +
+      "<p>Lessons publish here after owner review, once the system has scored misses to learn from. The list will grow at the pace of real mistakes, not marketing.</p></div>";
+  }
+
+  /* ---------- main render ---------- */
+  function render(d, isFallback) {
+    /* Stamp first, so no later failure can leave it reading a loading state. */
+    var when = fmtWhen(d.generated_at);
+    var stampEl = el("stamp");
+    if (isFallback) {
+      el("stamp-text").textContent = when
+        ? "Live data unavailable. Showing last saved snapshot from " + when + "."
+        : "Live data unavailable. Showing last saved snapshot.";
+      if (stampEl) stampEl.className = "stamp stale";
+    } else {
+      el("stamp-text").textContent = when ? "Snapshot generated " + when : "Snapshot time unavailable";
+      if (stampEl) stampEl.className = "stamp";
     }
 
-    const hasCal = d.calibration && Object.keys(d.calibration).length > 0;
-    document.getElementById('empty-cal').hidden = hasCal;
+    var sb = d.scoreboard || {};
+    var o = (d.theses && d.theses.overall) || {};
+    var rej = d.rejections || {};
+    var rejTotal = Object.keys(rej).reduce(function (s, k) { return s + (isNum(rej[k]) ? rej[k] : 0); }, 0);
 
-    const when = d.generated_at ? new Date(d.generated_at) : null;
-    document.getElementById('stamp-text').textContent = when
-      ? 'Snapshot generated ' + when.toUTCString().replace(':' + String(when.getUTCSeconds()).padStart(2, '0') + ' GMT', ' UTC')
-      : 'Snapshot time unavailable';
+    var callsTotal = pick(sb.calls_total, pick(o.total, 0));
+    var callsGraded = pick(sb.calls_graded, pick(o.confirmed, 0) + pick(o.invalidated, 0));
+    var callsOpen = pick(sb.calls_open, pick(o.open, 0));
+    var daysRunning = isNum(sb.days_running) ? sb.days_running : null;
+    var caught = pick(sb.validators_caught, rejTotal);
+
+    el("tiles").innerHTML =
+      tile(callsTotal, "calls made") +
+      tile(callsGraded, "calls scored") +
+      tile(callsOpen, "calls still open") +
+      tile(daysRunning, "days running unattended") +
+      tile(caught, "bad outputs caught by validators");
+
+    el("rates").innerHTML = GROUPS.map(function (g) {
+      return rateCard(g, groupRecord(d, g));
+    }).join("");
+
+    el("bench").innerHTML = benchText(d);
+
+    bars(el("rej-bars"), Object.keys(rej).map(function (r) {
+      return [REASON_LABELS[r] || r, isNum(rej[r]) ? rej[r] : 0];
+    }).sort(function (a, b) { return b[1] - a[1]; }));
+
+    var runCounts = (d.runs && d.runs.counts) || {};
+    var byMode = {};
+    Object.keys(runCounts).forEach(function (key) {
+      var mode = key.split(":")[0];
+      var label = MODE_LABELS[mode] || mode;
+      byMode[label] = (byMode[label] || 0) + (isNum(runCounts[key]) ? runCounts[key] : 0);
+    });
+    bars(el("runs-bars"), Object.keys(byMode).map(function (m) {
+      return [m, byMode[m]];
+    }).sort(function (a, b) { return b[1] - a[1]; }));
+
+    var gn = el("gauntlet-note");
+    if (rejTotal > 0 && callsTotal === 0) {
+      el("gauntlet-text").textContent =
+        "So far the validators have rejected every model response submitted to them: " + rejTotal +
+        " out of " + rejTotal + ". Nothing unvalidated has ever reached storage, a notification, or this page.";
+      gn.hidden = false;
+    } else {
+      gn.hidden = true;
+    }
+
+    el("cal-slot").innerHTML = calChart(d.calibration) || calEmpty();
+    el("lessons-slot").innerHTML = lessonsHtml(d);
   }
 
-  fetch('alphaloop.json', { cache: 'no-store' })
-    .then(function (r) { return r.ok ? r.json() : FALLBACK; })
-    .catch(function () { return FALLBACK; })
-    .then(render);
+  function safeRender(d, isFallback) {
+    try {
+      render(d, isFallback);
+    } catch (err) {
+      if (!isFallback) {
+        safeRender(FALLBACK, true);
+      } else {
+        /* Last-resort path: the stamp must never keep reading "loading". */
+        try { el("stamp-text").textContent = "Snapshot unavailable."; } catch (e2) { /* nothing left to do */ }
+      }
+    }
+  }
+
+  /* Hide the screenshot grid gracefully while images are absent. */
+  window.addEventListener("load", function () {
+    var shots = document.querySelectorAll("figure.shot");
+    var missing = document.querySelectorAll("figure.shot[data-missing]");
+    if (shots.length > 0 && missing.length === shots.length) {
+      el("shots").hidden = true;
+      el("shots-empty").hidden = false;
+    }
+  });
+
+  fetch("alphaloop.json", { cache: "no-store" })
+    .then(function (r) {
+      if (!r.ok) throw new Error("bad status");
+      return r.json();
+    })
+    .then(function (d) { safeRender(d, false); })
+    .catch(function () { safeRender(FALLBACK, true); });
+})();
 </script>
 
 </body>

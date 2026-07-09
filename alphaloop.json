@@ -1,18 +1,18 @@
 {
   "calibration": {},
-  "generated_at": "2026-07-09T04:48:24.531864+00:00",
+  "generated_at": "2026-07-09T16:12:43.439860+00:00",
   "lessons_count": 0,
   "rejections": {
-    "parse_error": 8
+    "parse_error": 9
   },
   "runs": {
     "counts": {
       "brief:ok": 2,
-      "cycle:ok": 6,
+      "cycle:ok": 7,
       "discover:ok": 2,
       "grade:ok": 2
     },
-    "latest_finished_at": "2026-07-09T04:48:22.639109+00:00"
+    "latest_finished_at": "2026-07-09T16:12:39.248231+00:00"
   },
   "theses": {
     "by_sleeve": {},

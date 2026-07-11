@@ -6,7 +6,8 @@ Static showcase site for AlphaLoop, an AI research analyst that makes investment
 
 - `index.html` is the hand-authored showcase page. Fully self-contained: system fonts, inline CSS and JS, inline SVG chart, no external requests. Section order: hook, live scoreboard, confidence-vs-results chart, lessons feed, dashboard screenshots, how the loop works, guardrails, under the hood.
 - `alphaloop.json` is the sanitized aggregate snapshot, republished by the private repo's CI. It contains aggregates only: scoreboard counts, hit rates per group, benchmark comparison, owner-curated lessons, run health, and rejection counts. Holdings, tickers, the calls themselves, and model-authored text never leave the private repository.
-- `shots/` (optional) holds three sanitized dashboard screenshots taken from a demonstration copy seeded with sample data: `daily.png`, `track-record.png`, `chat.png`. When a file is absent its slot hides itself; when all three are absent the section shows an honest placeholder instead.
+- `shots/` (optional) holds three sanitized dashboard screenshots taken from a demonstration copy seeded with sample data: `daily.png`, `track-record.png`, `chat.png`. When a file is absent its slot hides itself; when all three are absent the section shows an honest placeholder instead. Each screenshot links to the matching page of the interactive demo.
+- `demo/` is a static, click-through demo of the private dashboard: `index.html` (the money home), `calls.html` (the book of calls), `watching.html` (where the loop's attention is), `ask.html` (the grounded chat, including a reply withheld by the number gate), plus a shared `demo.css`. The pages are fully self-contained (system fonts, no JS, no external requests) and every number and ticker on them is invented fixture data, the same fictional seed the private repo uses for screenshots and tests. Nothing real ships.
 
 ## Data contract consumed by index.html
 

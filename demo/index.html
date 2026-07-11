@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AlphaLoop demo: Home</title>
+<meta name="description" content="Static interactive demo of the private AlphaLoop dashboard's money home. Every number and ticker is invented fixture data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23131110'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23d4a256' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+<div class="demo-banner" role="note">
+  <span><strong>Interactive demo.</strong> Every number and ticker on these pages is invented fixture data; the real dashboard runs privately against live, validator-verified data.</span>
+  <a href="../index.html">Back to the project page</a>
+</div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-row">
+      <a class="wordmark" href="index.html">
+        <span class="name">AlphaLoop</span>
+        <span class="tag">Recommendations, graded.</span>
+      </a>
+      <span class="eyebrow">Research journal</span>
+    </div>
+    <nav class="nav" aria-label="Primary">
+      <a class="nav-item active" href="index.html" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>
+        <span>Home</span>
+      </a>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.2a2 2 0 0 0-.6-1.4L12 12l-4.4 4.4a2 2 0 0 0-.6 1.4V22"/><path d="M7 2v4.2a2 2 0 0 0 .6 1.4L12 12l4.4-4.4a2 2 0 0 0 .6-1.4V2"/></svg>
+        <span>Long-term</span>
+      </span>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>Quick trades</span>
+      </span>
+      <a class="nav-item" href="calls.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1H10v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2h4"/></svg>
+        <span>Calls</span>
+      </a>
+      <a class="nav-item" href="watching.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Watching</span>
+      </a>
+      <a class="nav-item" href="ask.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+        <span>Ask</span>
+      </a>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>Health</span>
+      </span>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/><line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/><line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/></svg>
+        <span>Control</span>
+      </span>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        <span>How it works</span>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- Your money: the five-second answer, first. -->
+  <section class="reveal">
+    <div class="eyebrow" style="margin-bottom:12px;">Your money</div>
+    <div class="money-total">$3,368.00</div>
+    <p class="money-sub">Total value of what you hold, from the last verified price check. Informational only.</p>
+    <div class="money-grid">
+      <div>
+        <div class="eyebrow">Gain or loss overall</div>
+        <div class="tile-value good">+$400.00</div>
+        <div class="tile-delta good">+26.0%</div>
+        <div class="tile-hint">against what you paid, for holdings with a cost basis on file</div>
+      </div>
+      <div>
+        <div class="eyebrow">Today's move</div>
+        <div class="tile-value bad">-$36.00</div>
+        <div class="tile-delta bad">-1.1%</div>
+        <div class="tile-hint">since the prior trading day's check</div>
+      </div>
+      <div>
+        <div class="eyebrow">Vs the S&amp;P 500</div>
+        <div class="tile-value bad">1.5 pts</div>
+        <div class="tile-delta bad">behind the index today</div>
+        <div class="tile-hint">your move minus the S&amp;P's, same window</div>
+      </div>
+    </div>
+    <p class="lastcheck">Last check: 2 hours ago (Jul 4, 2026 16:31 UTC).</p>
+  </section>
+
+  <!-- Value over time: the equity curve. -->
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow">Value over time</div>
+      <h2 class="display">The worth of your holdings, check by check</h2>
+      <p class="sub">The solid line is your holdings' total verified value at each check. The dashed line is the S&amp;P 500 scaled to start at the same value, so you can see whether you are doing better than just holding the index.</p>
+    </div>
+    <div class="card">
+      <svg class="curve-svg" role="img" aria-label="Portfolio total value per check, with the S&amp;P 500 indexed to the same starting value" viewBox="0 0 640 220" preserveAspectRatio="none">
+        <!-- S&P 500 indexed to the Jul 1 start ($3,220.00 at close 560.00):
+             closes 560.00, 562.80, 561.40, 563.00, 563.90 -->
+        <polyline points="12.0,208.0 166.0,190.9 320.0,199.4 474.0,189.6 628.0,184.1"
+          fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.7" vector-effect="non-scaling-stroke"/>
+        <!-- Holdings totals per batch: 3220.00, 3279.00, 3404.00, 3390.00, 3368.00 -->
+        <polyline points="12.0,208.0 166.0,145.2 320.0,12.0 474.0,26.9 628.0,50.3"
+          fill="none" stroke="var(--accent)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <div class="curve-legend">
+        <span class="tnum">Jul 1, 2026</span>
+        <span class="keys">
+          <span><span class="swatch" aria-hidden="true"></span>Your holdings, $3,220.00 to $3,404.00</span>
+          <span><span class="swatch dashed" aria-hidden="true"></span>S&amp;P 500, indexed to the same start</span>
+        </span>
+        <span class="tnum">Jul 4, 2026</span>
+      </div>
+      <p class="backfill-note">History before the first live check is a one-time backfill estimate: it prices past days with today's share counts, so it is a fair sketch, not a verified record.</p>
+    </div>
+  </section>
+
+  <!-- Position by position. -->
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow">Position by position</div>
+      <h2 class="display">What each holding is doing</h2>
+      <p class="sub">Shares and cost basis are what you typed into the config; prices come only from the loop's verified checks. Informational only: AlphaLoop never places or manages any position.</p>
+    </div>
+    <div class="card flush">
+      <article class="pos-row">
+        <div>
+          <div class="pos-label">Holding</div>
+          <div class="pos-main">
+            <span class="tnum" style="font-size:1rem;">NOVX</span>
+            <span class="badge good">New</span>
+          </div>
+        </div>
+        <div>
+          <div class="pos-label">Shares</div>
+          <div class="pos-val tnum">40</div>
+        </div>
+        <div>
+          <div class="pos-label">What you paid</div>
+          <div class="pos-val tnum">$38.50 a share</div>
+        </div>
+        <div>
+          <div class="pos-label">Latest price</div>
+          <div class="pos-val tnum">$48.50</div>
+          <div class="pos-stamp tnum">Jul 4, 2026 16:31 UTC</div>
+        </div>
+        <div>
+          <div class="pos-label">Value now</div>
+          <div class="pos-val tnum">$1,940.00</div>
+        </div>
+        <div>
+          <div class="pos-label">Gain or loss</div>
+          <div class="pos-val tnum good">+$400.00 <span style="font-size:12px;">(+26.0%)</span></div>
+        </div>
+      </article>
+      <article class="pos-row">
+        <div>
+          <div class="pos-label">Holding</div>
+          <div class="pos-main">
+            <span class="tnum" style="font-size:1rem;">CALA</span>
+          </div>
+        </div>
+        <div>
+          <div class="pos-label">Shares</div>
+          <div class="pos-val tnum">15</div>
+        </div>
+        <div>
+          <div class="pos-label">What you paid</div>
+          <span class="nudge" title="In the private dashboard this links to the Control page">add cost basis</span>
+        </div>
+        <div>
+          <div class="pos-label">Latest price</div>
+          <div class="pos-val tnum">$95.20</div>
+          <div class="pos-stamp tnum">Jul 4, 2026 16:31 UTC</div>
+        </div>
+        <div>
+          <div class="pos-label">Value now</div>
+          <div class="pos-val tnum">$1,428.00</div>
+        </div>
+        <div>
+          <div class="pos-label">Gain or loss</div>
+          <div class="pos-val faint-t">needs a cost basis</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- Status hero: is it working? -->
+  <section class="reveal">
+    <div class="eyebrow" style="margin-bottom:12px;">Right now</div>
+    <h2 class="display" style="font-size:1.9rem; line-height:1.15;">Everything is running normally.</h2>
+    <p style="margin-top:12px; font-size:14px; color:var(--muted);">Last activity: Market scan finished 0m ago.</p>
+  </section>
+
+  <!-- How it is doing -->
+  <section class="reveal">
+    <div class="eyebrow" style="margin-bottom:12px;">How it is doing</div>
+    <div class="card flush">
+      <div class="stat-strip">
+        <div>
+          <div class="eyebrow">Ideas being tracked</div>
+          <div class="tile-value">4</div>
+          <div class="tile-hint">9 on file in total</div>
+        </div>
+        <div>
+          <div class="eyebrow">Ideas graded so far</div>
+          <div class="tile-value">5</div>
+          <div class="tile-delta muted-t">3 right, 2 wrong</div>
+        </div>
+        <div>
+          <div class="eyebrow">Hit rate</div>
+          <div class="tile-value">60%</div>
+          <div class="tile-delta good">3 of 5 were right</div>
+        </div>
+        <div>
+          <div class="eyebrow">Ideas its safety checks threw away</div>
+          <div class="tile-value">4</div>
+          <div class="tile-hint">caught before they could reach you</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Your three habits -->
+  <section class="reveal">
+    <div class="eyebrow" style="margin-bottom:12px;">Your three habits</div>
+    <div class="card">
+      <ol class="habits">
+        <li>Read the daily email each morning.</li>
+        <li>After you buy or sell anything, update your share counts on the Control page.</li>
+        <li>Check this page weekly to see how it is scoring.</li>
+      </ol>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- Today's daily email -->
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow">The daily email</div>
+      <h2 class="display">The latest word from the loop</h2>
+      <p class="sub">Issued Jul 4, 2026 at 01:00 UTC.</p>
+    </div>
+    <div class="card">
+      <p class="display" style="font-size:1.125rem; line-height:1.4; color:var(--ink);">3 open theses, 2 confirmed overnight</p>
+      <p style="margin-top:12px; font-size:14px; line-height:1.6; color:var(--ink); white-space:pre-wrap;">Daily brief. New reads: NOVX follow-through (78). Confirmed: NOVX, CALA. Informational only. Not financial advice. AlphaLoop never places or manages any position.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    <p class="compliance">Recommendations only. AlphaLoop never places or manages any position. Not financial advice.</p>
+    <p class="note">This is a static demo of the private dashboard, rendered from the same invented fixture data the project uses for screenshots and tests. In the real system every number shown is cross-checked against fetched data, and model-authored text is displayed as inert content.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AlphaLoop demo: Ask</title>
+<meta name="description" content="Static interactive demo of the private AlphaLoop dashboard's grounded chat, including a reply withheld by the deterministic number gate. Every number and ticker is invented fixture data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23131110'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23d4a256' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+<div class="demo-banner" role="note">
+  <span><strong>Interactive demo.</strong> Every number and ticker on these pages is invented fixture data; the real dashboard runs privately against live, validator-verified data.</span>
+  <a href="../index.html">Back to the project page</a>
+</div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-row">
+      <a class="wordmark" href="index.html">
+        <span class="name">AlphaLoop</span>
+        <span class="tag">Recommendations, graded.</span>
+      </a>
+      <span class="eyebrow">Research journal</span>
+    </div>
+    <nav class="nav" aria-label="Primary">
+      <a class="nav-item" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>
+        <span>Home</span>
+      </a>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.2a2 2 0 0 0-.6-1.4L12 12l-4.4 4.4a2 2 0 0 0-.6 1.4V22"/><path d="M7 2v4.2a2 2 0 0 0 .6 1.4L12 12l4.4-4.4a2 2 0 0 0 .6-1.4V2"/></svg>
+        <span>Long-term</span>
+      </span>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>Quick trades</span>
+      </span>
+      <a class="nav-item" href="calls.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1H10v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2h4"/></svg>
+        <span>Calls</span>
+      </a>
+      <a class="nav-item" href="watching.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Watching</span>
+      </a>
+      <a class="nav-item active" href="ask.html" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+        <span>Ask</span>
+      </a>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>Health</span>
+      </span>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/><line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/><line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/></svg>
+        <span>Control</span>
+      </span>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        <span>How it works</span>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow">Ask</div>
+      <h2 class="display">Ask AlphaLoop</h2>
+      <p class="sub">Plain-language answers about what the loop holds, watches, and has been doing, drawn from your own data.</p>
+    </div>
+
+    <div class="ask-note" role="note">Grounded in your verified data as of Jul 4, 2026 16:31 UTC. Conversational answers can still be wrong, and they are never instructions to trade. Same number-verification rules as the rest of the system apply.</div>
+
+    <div class="chips" aria-label="Suggested questions">
+      <span class="chip">How is my portfolio doing?</span>
+      <span class="chip">Why is there a call to trim on any of my positions?</span>
+      <span class="chip">What are you watching right now?</span>
+      <span class="chip">How often have the quick trades been right?</span>
+    </div>
+
+    <div class="convo" aria-label="Conversation">
+      <div class="msg user">
+        <div class="who eyebrow">You</div>
+        <p>How is my portfolio doing?</p>
+      </div>
+      <div class="msg assistant">
+        <div class="who eyebrow">AlphaLoop</div>
+        <p>Your holdings are worth $3,368.00 as of the last verified check (Jul 4, 2026 16:31 UTC). Against what you paid, the holding with a cost basis on file (NOVX) is up $400.00, or +26.0%. Today the total moved down $36.00 (-1.1%) from the prior trading day's check, which is about 1.5 points behind the S&amp;P 500 over the same window. CALA still needs a cost basis on the Control page before its overall gain can be measured.</p>
+      </div>
+
+      <div class="msg user">
+        <div class="who eyebrow">You</div>
+        <p>Should I buy more VLTA?</p>
+      </div>
+      <div class="msg assistant">
+        <div class="who eyebrow">AlphaLoop</div>
+        <p>I can report the system's validated view, and the decision is yours. There is an open forward call on VLTA from the overnight idea hunt: Voltaic Materials is positioned to win the next round of grid-storage supply deals as utilities re-tender capacity in the fall. Its confidence is Lukewarm (58) on a 60-day horizon, so it is an early read, not a strong one. What would prove it wrong: losing the flagship utility re-tender invalidates the forward read. The signposts it named are on the calls page. AlphaLoop never places or manages any position.</p>
+      </div>
+
+      <div class="msg user">
+        <div class="who eyebrow">You</div>
+        <p>What do you think NOVX will be worth next month?</p>
+      </div>
+      <div class="msg assistant withheld">
+        <div class="who eyebrow">AlphaLoop</div>
+        <p>I stated a number I could not verify against fetched data, so I have withheld the answer. Ask again and I will stick to verified figures.</p>
+      </div>
+    </div>
+
+    <p class="gate-note"><strong>What just happened:</strong> the third reply was replaced by the deterministic number gate. The model's draft stated a dollar figure that matched nothing in the verified grounding data, so the server discarded it and returned this fixed line instead. Nothing unverified ever reaches the page.</p>
+
+    <div class="chat-row">
+      <input type="text" aria-label="Ask AlphaLoop a question" placeholder="Interactive chat runs in the private dashboard only." disabled>
+      <button type="button" class="send" disabled>Send</button>
+    </div>
+    <p class="chat-foot">The conversation lives in this page only; reloading clears it. Nothing you type or read here is stored anywhere.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    <p class="compliance">Recommendations only. AlphaLoop never places or manages any position. Not financial advice.</p>
+    <p class="note">This is a static demo of the private dashboard, rendered from the same invented fixture data the project uses for screenshots and tests. In the real system every number shown is cross-checked against fetched data, and model-authored text is displayed as inert content.</p>
+  </div>
+</footer>
+
+</body>
+</html>

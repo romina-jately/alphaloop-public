@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AlphaLoop demo: Calls</title>
+<meta name="description" content="Static interactive demo of the private AlphaLoop dashboard's book of calls. Every number and ticker is invented fixture data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23131110'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23d4a256' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+<div class="demo-banner" role="note">
+  <span><strong>Interactive demo.</strong> Every number and ticker on these pages is invented fixture data; the real dashboard runs privately against live, validator-verified data.</span>
+  <a href="../index.html">Back to the project page</a>
+</div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-row">
+      <a class="wordmark" href="index.html">
+        <span class="name">AlphaLoop</span>
+        <span class="tag">Recommendations, graded.</span>
+      </a>
+      <span class="eyebrow">Research journal</span>
+    </div>
+    <nav class="nav" aria-label="Primary">
+      <a class="nav-item" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>
+        <span>Home</span>
+      </a>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.2a2 2 0 0 0-.6-1.4L12 12l-4.4 4.4a2 2 0 0 0-.6 1.4V22"/><path d="M7 2v4.2a2 2 0 0 0 .6 1.4L12 12l4.4-4.4a2 2 0 0 0 .6-1.4V2"/></svg>
+        <span>Long-term</span>
+      </span>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>Quick trades</span>
+      </span>
+      <a class="nav-item active" href="calls.html" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1H10v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2h4"/></svg>
+        <span>Calls</span>
+      </a>
+      <a class="nav-item" href="watching.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Watching</span>
+      </a>
+      <a class="nav-item" href="ask.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+        <span>Ask</span>
+      </a>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>Health</span>
+      </span>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/><line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/><line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/></svg>
+        <span>Control</span>
+      </span>
+      <span class="nav-item" title="Not part of this demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        <span>How it works</span>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="reveal">
+    <div class="sec-head sec-head-row">
+      <div>
+        <div class="eyebrow">The book of calls</div>
+        <h2 class="display">Every call, open and closed</h2>
+        <p class="sub">Newest first, each with its timestamp, its claim, what would prove it wrong, and the evidence it was built on. Filter by outcome below, or download the audit trail as a spreadsheet.</p>
+      </div>
+      <div class="seg" role="group" aria-label="Group filter">
+        <span class="on">All</span>
+        <span title="Not part of this demo">Long-term</span>
+        <span title="Not part of this demo">Quick trades</span>
+      </div>
+    </div>
+
+    <div class="controls-row">
+      <div class="seg" role="group" aria-label="Outcome filter">
+        <span class="on">All</span>
+        <span title="Not part of this demo">Right</span>
+        <span title="Not part of this demo">Wrong</span>
+        <span title="Not part of this demo">Still open</span>
+      </div>
+      <button type="button" class="csv-btn" title="demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download CSV
+      </button>
+    </div>
+
+    <!-- Call 1: the forward call from the overnight idea hunt (open). -->
+    <article class="entry">
+      <div class="eyebrow accent-t">Forward call</div>
+      <div class="entry-head">
+        <h3 class="subject">VLTA</h3>
+        <span class="kind">ticker</span>
+        <span class="badge good"><span aria-hidden="true">&#9650;</span> Up</span>
+        <span class="badge muted">Open</span>
+        <span class="badge good">New</span>
+        <span class="stamp">Jul 4, 2026 16:31 UTC</span>
+      </div>
+      <dl class="entry-meta">
+        <div class="pair"><dt>Confidence</dt><dd>Lukewarm (58)</dd></div>
+        <div class="pair"><dt>Horizon</dt><dd>60d</dd></div>
+        <div class="pair"><dt>Group</dt><dd class="quiet">Long-term</dd></div>
+        <div class="pair"><dt>Model</dt><dd class="quiet">gemini-2.0-flash</dd></div>
+      </dl>
+      <div class="block">
+        <div class="eyebrow">Claim</div>
+        <p>Voltaic Materials is positioned to win the next round of grid-storage supply deals as utilities re-tender capacity in the fall.</p>
+      </div>
+      <div class="block">
+        <div class="eyebrow">What's driving it</div>
+        <p class="quiet">Utility re-tender cycle expected in the fall.</p>
+      </div>
+      <div class="block">
+        <div class="eyebrow">What would prove this wrong</div>
+        <p class="quiet">Losing the flagship utility re-tender invalidates the forward read.</p>
+      </div>
+      <div class="block">
+        <div class="eyebrow">Signposts</div>
+        <ul class="signposts">
+          <li>A second grid-storage supply agreement is announced</li>
+          <li>Gross margin holds above 30 percent for two straight quarters</li>
+          <li>A rival cell chemistry wins the flagship utility contract</li>
+        </ul>
+      </div>
+      <details open>
+        <summary>Why? <span class="plain">The evidence behind this call</span></summary>
+        <div class="evidence">
+          <ul>
+            <li>
+              <span class="title">Utilities plan fall re-tender of grid-storage capacity</span>
+              <span class="meta"><span>reuters_business</span><span class="tnum">Jul 3, 2026 09:00 UTC</span></span>
+            </li>
+            <li>
+              <span class="title">Voltaic Materials expands cell output ahead of tender season</span>
+              <span class="meta"><span>marketwatch</span><span class="tnum">Jul 2, 2026 15:00 UTC</span></span>
+            </li>
+          </ul>
+        </div>
+      </details>
+    </article>
+
+    <!-- Call 2: the open quick trade with end-of-day reference levels. -->
+    <article class="entry">
+      <div class="entry-head">
+        <h3 class="subject">CALA</h3>
+        <span class="kind">ticker</span>
+        <span class="badge good"><span aria-hidden="true">&#9650;</span> Up</span>
+        <span class="badge muted">Open</span>
+        <span class="badge warn">Take</span>
+        <span class="stamp">Jul 4, 2026 13:45 UTC</span>
+      </div>
+      <dl class="entry-meta">
+        <div class="pair"><dt>Confidence</dt><dd>Lukewarm (61)</dd></div>
+        <div class="pair"><dt>Horizon</dt><dd>1d</dd></div>
+        <div class="pair"><dt>Group</dt><dd class="quiet">Quick trades</dd></div>
+        <div class="pair"><dt>Model</dt><dd class="quiet">llama-3.3-70b-versatile</dd></div>
+      </dl>
+      <div class="block">
+        <div class="eyebrow">Claim</div>
+        <p>Guidance momentum plus a quiet tape leaves room for a push toward the target level today.</p>
+      </div>
+      <div class="block">
+        <div class="eyebrow">What's driving it</div>
+        <p class="quiet">Continuation after raised guidance.</p>
+      </div>
+      <div class="block">
+        <div class="eyebrow">What would prove this wrong</div>
+        <p class="quiet">A close under the stop reference level ends the setup.</p>
+      </div>
+      <div class="levels">
+        <div class="figs">
+          <div class="figure"><div class="figure-label">Entry ref</div><div class="figure-value">94.20</div></div>
+          <div class="figure"><div class="figure-label">Stop</div><div class="figure-value">92.90</div></div>
+          <div class="figure"><div class="figure-label">Target</div><div class="figure-value">97.00</div></div>
+          <div class="figure"><div class="figure-label">R:R</div><div class="figure-value">2.15</div></div>
+        </div>
+        <p class="caveat">End-of-day reference levels, not live quotes.</p>
+      </div>
+      <details>
+        <summary>Why? <span class="plain">The evidence behind this call</span></summary>
+        <div class="evidence">
+          <ul>
+            <li>
+              <span class="title">Calibre Labs raises full-year guidance</span>
+              <span class="meta"><span>cnbc</span><span class="tnum">Jul 2, 2026 14:00 UTC</span></span>
+            </li>
+          </ul>
+        </div>
+      </details>
+    </article>
+
+    <!-- Call 3: a graded long-term call, scored Right. -->
+    <article class="entry">
+      <div class="entry-head">
+        <h3 class="subject">NOVX</h3>
+        <span class="kind">ticker</span>
+        <span class="badge good"><span aria-hidden="true">&#9650;</span> Up</span>
+        <span class="badge good">Right</span>
+        <span class="badge good">Add</span>
+        <span class="stamp">Jun 5, 2026 13:31 UTC</span>
+      </div>
+      <dl class="entry-meta">
+        <div class="pair"><dt>Confidence</dt><dd>Very confident (82)</dd></div>
+        <div class="pair"><dt>Horizon</dt><dd>30d</dd></div>
+        <div class="pair"><dt>Group</dt><dd class="quiet">Long-term</dd></div>
+        <div class="pair"><dt>Model</dt><dd class="quiet">gemini-2.0-flash</dd></div>
+        <div class="pair"><dt>Graded</dt><dd class="quiet">Jul 4, 2026 01:05 UTC</dd></div>
+      </dl>
+      <div class="block">
+        <div class="eyebrow">Claim</div>
+        <p>Revenue beat plus a multi-year supply agreement points to continued upside over the next few weeks.</p>
+      </div>
+      <div class="block">
+        <div class="eyebrow">What's driving it</div>
+        <p class="quiet">Multi-year supply agreement disclosed in the 8-K.</p>
+      </div>
+      <div class="block">
+        <div class="eyebrow">What would prove this wrong</div>
+        <p class="quiet">A close below the pre-earnings price invalidates the read.</p>
+      </div>
+      <div class="returns">
+        <div class="figure"><div class="figure-label">Raw</div><div class="figure-value good">+16.0%</div></div>
+        <div class="figure"><div class="figure-label">SPY</div><div class="figure-value good">+2.4%</div></div>
+        <div class="figure"><div class="figure-label">Excess</div><div class="figure-value good">+13.6%</div></div>
+      </div>
+      <details>
+        <summary>Why? <span class="plain">The evidence behind this call</span></summary>
+        <div class="evidence">
+          <ul>
+            <li>
+              <span class="title">NovaXen beats quarterly revenue estimates</span>
+              <span class="meta"><span>reuters_business</span><span class="tnum">Jul 3, 2026 12:00 UTC</span></span>
+            </li>
+            <li>
+              <span class="title">NovaXen files 8-K on new supply agreement</span>
+              <span class="meta"><span>edgar</span><span class="tnum">Jul 3, 2026 18:00 UTC</span></span>
+            </li>
+          </ul>
+        </div>
+      </details>
+    </article>
+
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    <p class="compliance">Recommendations only. AlphaLoop never places or manages any position. Not financial advice.</p>
+    <p class="note">This is a static demo of the private dashboard, rendered from the same invented fixture data the project uses for screenshots and tests. In the real system every number shown is cross-checked against fetched data, and model-authored text is displayed as inert content.</p>
+  </div>
+</footer>
+
+</body>
+</html>

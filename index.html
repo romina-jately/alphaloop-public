@@ -165,10 +165,26 @@
   }
 
   /* ---------- a look inside ---------- */
+  .demo-cta-row { margin-bottom: 28px; }
+  .demo-cta {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--ember);
+    border-radius: 6px;
+    padding: 11px 20px;
+  }
+  .demo-cta:hover { background: #e0b06a; text-decoration: none; }
+  .demo-cta-hint { display: inline-block; margin-left: 14px; font-size: 13.5px; color: var(--ink-3); }
   .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   figure.shot { background: var(--surface); border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; margin: 0; }
+  figure.shot a.shot-link { display: block; }
   figure.shot img { width: 100%; display: block; }
+  figure.shot a.shot-link:hover img { opacity: 0.85; }
   figure.shot figcaption { padding: 12px 16px 16px; font-size: 13.5px; color: var(--ink-2); }
+  figure.shot figcaption a { white-space: nowrap; }
   figure.shot[data-missing] { display: none; }
 
   /* ---------- pipeline ---------- */
@@ -298,20 +314,24 @@
     <div class="wrap">
       <div class="sec-head">
         <h2>A look inside</h2>
-        <p>The dashboard itself stays private. These screenshots come from a demonstration copy seeded with sample data, so nothing real ships.</p>
+        <p>The dashboard itself stays private. These screenshots come from a demonstration copy seeded with sample data, so nothing real ships. The same fixture data also powers a click-through demo of the product.</p>
       </div>
+      <p class="demo-cta-row">
+        <a class="demo-cta" href="demo/">Explore the interactive demo &rarr;</a>
+        <span class="demo-cta-hint">Four full pages, every number invented fixture data.</span>
+      </p>
       <div class="shots" id="shots">
         <figure class="shot">
-          <img src="shots/daily.png" alt="The daily dashboard view" loading="lazy" onerror="this.closest('figure').dataset.missing='1'">
-          <figcaption>The morning view: open calls, their current status, and what would prove each one wrong.</figcaption>
+          <a class="shot-link" href="demo/index.html"><img src="shots/daily.png" alt="The daily dashboard view; opens the demo home page" loading="lazy" onerror="this.closest('figure').dataset.missing='1'"></a>
+          <figcaption>The morning view: open calls, their current status, and what would prove each one wrong. <a href="demo/index.html">Open in the demo</a></figcaption>
         </figure>
         <figure class="shot">
-          <img src="shots/track-record.png" alt="The track record view" loading="lazy" onerror="this.closest('figure').dataset.missing='1'">
-          <figcaption>The track record: every call ever made, scored right or wrong, nothing deleted.</figcaption>
+          <a class="shot-link" href="demo/calls.html"><img src="shots/track-record.png" alt="The track record view; opens the demo calls page" loading="lazy" onerror="this.closest('figure').dataset.missing='1'"></a>
+          <figcaption>The track record: every call ever made, scored right or wrong, nothing deleted. <a href="demo/calls.html">Open in the demo</a></figcaption>
         </figure>
         <figure class="shot">
-          <img src="shots/chat.png" alt="The ask-about-a-stock chat view" loading="lazy" onerror="this.closest('figure').dataset.missing='1'">
-          <figcaption>Ask it about a stock: every dollar figure in a reply is checked against verified data before it renders.</figcaption>
+          <a class="shot-link" href="demo/ask.html"><img src="shots/chat.png" alt="The ask-about-a-stock chat view; opens the demo ask page" loading="lazy" onerror="this.closest('figure').dataset.missing='1'"></a>
+          <figcaption>Ask it about a stock: every dollar figure in a reply is checked against verified data before it renders. <a href="demo/ask.html">Open in the demo</a></figcaption>
         </figure>
       </div>
       <p class="empty-box" id="shots-empty" hidden>Screenshots are being prepared from a demonstration copy of the dashboard, seeded with sample data so nothing private ships. They will appear here.</p>

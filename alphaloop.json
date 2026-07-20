@@ -4,7 +4,7 @@
     "graded_with_benchmark": 0
   },
   "calibration": {},
-  "generated_at": "2026-07-20T04:33:39.258303+00:00",
+  "generated_at": "2026-07-20T15:32:00.783057+00:00",
   "hit_rates": {
     "long_term": {
       "graded": 0,
@@ -26,17 +26,17 @@
   "runs": {
     "counts": {
       "brief:ok": 13,
-      "cycle:ok": 28,
+      "cycle:ok": 29,
       "discover:ok": 13,
       "grade:ok": 13,
       "weekly:ok": 2
     },
-    "latest_finished_at": "2026-07-20T04:33:37.087957+00:00"
+    "latest_finished_at": "2026-07-20T15:31:55.580807+00:00"
   },
   "scoreboard": {
     "calls_graded": 0,
-    "calls_open": 49,
-    "calls_total": 49,
+    "calls_open": 52,
+    "calls_total": 52,
     "days_running": 14,
     "validators_caught": 25
   },
@@ -46,16 +46,16 @@
         "confirmed": 0,
         "hit_rate": null,
         "invalidated": 0,
-        "open": 49,
-        "total": 49
+        "open": 52,
+        "total": 52
       }
     },
     "overall": {
       "confirmed": 0,
       "hit_rate": null,
       "invalidated": 0,
-      "open": 49,
-      "total": 49
+      "open": 52,
+      "total": 52
     }
   }
 }

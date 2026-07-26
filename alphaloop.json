@@ -4,7 +4,7 @@
     "graded_with_benchmark": 0
   },
   "calibration": {},
-  "generated_at": "2026-07-26T04:23:28.803115+00:00",
+  "generated_at": "2026-07-26T05:37:58.991492+00:00",
   "hit_rates": {
     "long_term": {
       "graded": 0,
@@ -29,9 +29,9 @@
       "cycle:ok": 43,
       "discover:ok": 19,
       "grade:ok": 19,
-      "weekly:ok": 2
+      "weekly:ok": 3
     },
-    "latest_finished_at": "2026-07-26T04:23:26.400173+00:00"
+    "latest_finished_at": "2026-07-26T05:37:56.716794+00:00"
   },
   "scoreboard": {
     "calls_graded": 0,

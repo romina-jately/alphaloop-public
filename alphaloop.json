@@ -19,7 +19,7 @@
       }
     ]
   },
-  "generated_at": "2026-08-09T03:00:58.884842+00:00",
+  "generated_at": "2026-08-09T03:48:12.259733+00:00",
   "hit_rates": {
     "long_term": {
       "graded": 2,
@@ -45,9 +45,9 @@
       "cycle:ok": 72,
       "discover:ok": 33,
       "grade:ok": 33,
-      "weekly:ok": 4
+      "weekly:ok": 5
     },
-    "latest_finished_at": "2026-08-09T03:00:56.348034+00:00"
+    "latest_finished_at": "2026-08-09T03:48:09.382373+00:00"
   },
   "scoreboard": {
     "calls_graded": 2,

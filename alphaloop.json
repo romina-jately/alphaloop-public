@@ -1,7 +1,7 @@
 {
   "benchmark": {
-    "avg_excess_vs_spy": -0.542831232055089,
-    "graded_with_benchmark": 2
+    "avg_excess_vs_spy": -0.41203598945433906,
+    "graded_with_benchmark": 4
   },
   "calibration": {
     "long_term": [
@@ -12,6 +12,12 @@
         "n": 1
       },
       {
+        "bucket": 70,
+        "hit_rate": 0.0,
+        "hits": 0,
+        "n": 2
+      },
+      {
         "bucket": 80,
         "hit_rate": 1.0,
         "hits": 1,
@@ -19,12 +25,12 @@
       }
     ]
   },
-  "generated_at": "2026-08-19T19:49:12.926232+00:00",
+  "generated_at": "2026-08-20T02:15:46.742906+00:00",
   "hit_rates": {
     "long_term": {
-      "graded": 2,
+      "graded": 4,
       "hit": 1,
-      "rate": 0.5
+      "rate": 0.25
     },
     "quick_trades": {
       "graded": 0,
@@ -33,7 +39,7 @@
     }
   },
   "lessons": [],
-  "lessons_count": 1,
+  "lessons_count": 3,
   "rejections": {
     "parse_error": 36,
     "price_mismatch": 9,
@@ -41,37 +47,37 @@
   },
   "runs": {
     "counts": {
-      "brief:ok": 43,
+      "brief:ok": 44,
       "cycle:ok": 95,
-      "discover:ok": 43,
-      "grade:ok": 43,
+      "discover:ok": 44,
+      "grade:ok": 44,
       "weekly:ok": 6
     },
-    "latest_finished_at": "2026-08-19T19:49:09.826385+00:00"
+    "latest_finished_at": "2026-08-20T02:15:43.911498+00:00"
   },
   "scoreboard": {
-    "calls_graded": 2,
+    "calls_graded": 4,
     "calls_open": 301,
-    "calls_total": 303,
-    "days_running": 44,
+    "calls_total": 305,
+    "days_running": 45,
     "validators_caught": 58
   },
   "theses": {
     "by_sleeve": {
       "long_term": {
         "confirmed": 1,
-        "hit_rate": 0.5,
-        "invalidated": 1,
+        "hit_rate": 0.25,
+        "invalidated": 3,
         "open": 301,
-        "total": 303
+        "total": 305
       }
     },
     "overall": {
       "confirmed": 1,
-      "hit_rate": 0.5,
-      "invalidated": 1,
+      "hit_rate": 0.25,
+      "invalidated": 3,
       "open": 301,
-      "total": 303
+      "total": 305
     }
   }
 }

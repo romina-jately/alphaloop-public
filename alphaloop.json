@@ -7,15 +7,15 @@
     "long_term": [
       {
         "bucket": 60,
-        "hit_rate": 0.3333333333333333,
+        "hit_rate": 0.25,
         "hits": 2,
-        "n": 6
+        "n": 8
       },
       {
         "bucket": 70,
-        "hit_rate": 0.2,
+        "hit_rate": 0.15384615384615385,
         "hits": 2,
-        "n": 10
+        "n": 13
       },
       {
         "bucket": 80,
@@ -25,12 +25,12 @@
       }
     ]
   },
-  "generated_at": "2026-08-29T02:22:37.993873+00:00",
+  "generated_at": "2026-08-29T08:04:53.322840+00:00",
   "hit_rates": {
     "long_term": {
-      "graded": 23,
+      "graded": 28,
       "hit": 5,
-      "rate": 0.21739130434782608
+      "rate": 0.17857142857142858
     },
     "quick_trades": {
       "graded": 0,
@@ -39,7 +39,7 @@
     }
   },
   "lessons": [],
-  "lessons_count": 10,
+  "lessons_count": 15,
   "rejections": {
     "parse_error": 49,
     "price_mismatch": 9,
@@ -47,18 +47,18 @@
   },
   "runs": {
     "counts": {
-      "brief:ok": 52,
+      "brief:ok": 53,
       "cycle:ok": 116,
-      "discover:ok": 52,
-      "grade:ok": 52,
+      "discover:ok": 53,
+      "grade:ok": 53,
       "weekly:ok": 7
     },
-    "latest_finished_at": "2026-08-29T02:22:34.924585+00:00"
+    "latest_finished_at": "2026-08-29T08:04:49.818287+00:00"
   },
   "scoreboard": {
-    "calls_graded": 23,
-    "calls_open": 324,
-    "calls_total": 347,
+    "calls_graded": 28,
+    "calls_open": 321,
+    "calls_total": 349,
     "days_running": 54,
     "validators_caught": 75
   },
@@ -66,18 +66,18 @@
     "by_sleeve": {
       "long_term": {
         "confirmed": 5,
-        "hit_rate": 0.21739130434782608,
-        "invalidated": 18,
-        "open": 324,
-        "total": 347
+        "hit_rate": 0.17857142857142858,
+        "invalidated": 23,
+        "open": 321,
+        "total": 349
       }
     },
     "overall": {
       "confirmed": 5,
-      "hit_rate": 0.21739130434782608,
-      "invalidated": 18,
-      "open": 324,
-      "total": 347
+      "hit_rate": 0.17857142857142858,
+      "invalidated": 23,
+      "open": 321,
+      "total": 349
     }
   }
 }

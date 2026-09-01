@@ -1,7 +1,7 @@
 {
   "benchmark": {
-    "avg_excess_vs_spy": -0.037607888283663925,
-    "graded_with_benchmark": 23
+    "avg_excess_vs_spy": 0.22222715927489117,
+    "graded_with_benchmark": 28
   },
   "calibration": {
     "long_term": [
@@ -19,18 +19,18 @@
       },
       {
         "bucket": 80,
-        "hit_rate": 0.14285714285714285,
+        "hit_rate": 0.08333333333333333,
         "hits": 1,
-        "n": 7
+        "n": 12
       }
     ]
   },
-  "generated_at": "2026-08-31T23:17:55.220267+00:00",
+  "generated_at": "2026-09-01T06:02:39.165402+00:00",
   "hit_rates": {
     "long_term": {
-      "graded": 28,
+      "graded": 33,
       "hit": 5,
-      "rate": 0.17857142857142858
+      "rate": 0.15151515151515152
     },
     "quick_trades": {
       "graded": 0,
@@ -47,37 +47,37 @@
   },
   "runs": {
     "counts": {
-      "brief:ok": 55,
+      "brief:ok": 56,
       "cycle:ok": 119,
-      "discover:ok": 55,
-      "grade:ok": 55,
+      "discover:ok": 56,
+      "grade:ok": 56,
       "weekly:ok": 8
     },
-    "latest_finished_at": "2026-08-31T23:17:52.111504+00:00"
+    "latest_finished_at": "2026-09-01T06:02:36.074141+00:00"
   },
   "scoreboard": {
-    "calls_graded": 28,
-    "calls_open": 323,
-    "calls_total": 351,
-    "days_running": 56,
+    "calls_graded": 33,
+    "calls_open": 320,
+    "calls_total": 353,
+    "days_running": 57,
     "validators_caught": 80
   },
   "theses": {
     "by_sleeve": {
       "long_term": {
         "confirmed": 5,
-        "hit_rate": 0.17857142857142858,
-        "invalidated": 23,
-        "open": 323,
-        "total": 351
+        "hit_rate": 0.15151515151515152,
+        "invalidated": 28,
+        "open": 320,
+        "total": 353
       }
     },
     "overall": {
       "confirmed": 5,
-      "hit_rate": 0.17857142857142858,
-      "invalidated": 23,
-      "open": 323,
-      "total": 351
+      "hit_rate": 0.15151515151515152,
+      "invalidated": 28,
+      "open": 320,
+      "total": 353
     }
   }
 }

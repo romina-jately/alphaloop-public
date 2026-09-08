@@ -25,7 +25,7 @@
       }
     ]
   },
-  "generated_at": "2026-09-08T05:34:51.016832+00:00",
+  "generated_at": "2026-09-08T17:21:36.158067+00:00",
   "hit_rates": {
     "long_term": {
       "graded": 47,
@@ -41,26 +41,26 @@
   "lessons": [],
   "lessons_count": 27,
   "rejections": {
-    "parse_error": 66,
+    "parse_error": 67,
     "price_mismatch": 11,
     "unknown_ticker": 19
   },
   "runs": {
     "counts": {
       "brief:ok": 63,
-      "cycle:ok": 134,
+      "cycle:ok": 135,
       "discover:ok": 63,
       "grade:ok": 63,
       "weekly:ok": 9
     },
-    "latest_finished_at": "2026-09-08T05:34:48.210341+00:00"
+    "latest_finished_at": "2026-09-08T17:21:32.661186+00:00"
   },
   "scoreboard": {
     "calls_graded": 47,
     "calls_open": 327,
     "calls_total": 374,
     "days_running": 64,
-    "validators_caught": 96
+    "validators_caught": 97
   },
   "theses": {
     "by_sleeve": {

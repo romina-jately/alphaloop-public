@@ -1,7 +1,7 @@
 {
   "benchmark": {
-    "avg_excess_vs_spy": 0.48016042898577077,
-    "graded_with_benchmark": 53
+    "avg_excess_vs_spy": 0.5084497819315906,
+    "graded_with_benchmark": 56
   },
   "calibration": {
     "long_term": [
@@ -13,24 +13,24 @@
       },
       {
         "bucket": 70,
-        "hit_rate": 0.1935483870967742,
+        "hit_rate": 0.1875,
         "hits": 6,
-        "n": 31
+        "n": 32
       },
       {
         "bucket": 80,
-        "hit_rate": 0.045454545454545456,
+        "hit_rate": 0.041666666666666664,
         "hits": 1,
-        "n": 22
+        "n": 24
       }
     ]
   },
-  "generated_at": "2026-09-11T21:50:37.248585+00:00",
+  "generated_at": "2026-09-12T05:20:13.734492+00:00",
   "hit_rates": {
     "long_term": {
-      "graded": 63,
+      "graded": 66,
       "hit": 9,
-      "rate": 0.14285714285714285
+      "rate": 0.13636363636363635
     },
     "quick_trades": {
       "graded": 0,
@@ -39,44 +39,44 @@
     }
   },
   "lessons": [],
-  "lessons_count": 32,
+  "lessons_count": 34,
   "rejections": {
-    "parse_error": 72,
+    "parse_error": 73,
     "price_mismatch": 12,
     "unknown_ticker": 19
   },
   "runs": {
     "counts": {
-      "brief:ok": 66,
+      "brief:ok": 67,
       "cycle:ok": 146,
-      "discover:ok": 66,
-      "grade:ok": 66,
+      "discover:ok": 67,
+      "grade:ok": 67,
       "weekly:ok": 9
     },
-    "latest_finished_at": "2026-09-11T21:50:33.702334+00:00"
+    "latest_finished_at": "2026-09-12T05:20:10.622668+00:00"
   },
   "scoreboard": {
-    "calls_graded": 63,
-    "calls_open": 331,
+    "calls_graded": 66,
+    "calls_open": 328,
     "calls_total": 394,
-    "days_running": 67,
-    "validators_caught": 103
+    "days_running": 68,
+    "validators_caught": 104
   },
   "theses": {
     "by_sleeve": {
       "long_term": {
         "confirmed": 9,
-        "hit_rate": 0.14285714285714285,
-        "invalidated": 54,
-        "open": 331,
+        "hit_rate": 0.13636363636363635,
+        "invalidated": 57,
+        "open": 328,
         "total": 394
       }
     },
     "overall": {
       "confirmed": 9,
-      "hit_rate": 0.14285714285714285,
-      "invalidated": 54,
-      "open": 331,
+      "hit_rate": 0.13636363636363635,
+      "invalidated": 57,
+      "open": 328,
       "total": 394
     }
   }
